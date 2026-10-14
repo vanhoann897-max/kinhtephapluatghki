@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Kinh Tế & Pháp Luật 10 - Giữa Kì 1</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-shadow { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05); }
+        transition-all { transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="goHome()">
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md flex items-center justify-center">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">KTPL 10 - Ôn Thi Giữa Kì 1</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Đề cương trắc nghiệm & tự luận chuẩn xác</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <button onclick="goHome()" class="hidden sm:inline-flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 transition">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Trang chủ</span>
+                </button>
+                <button onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition shadow-sm" title="Chuyển đổi giao diện Sáng/Tối">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- VIEW: DASHBOARD (Home) -->
+        <div id="view-home" class="space-y-8">
+            <!-- Welcome Banner -->
+            <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-800 rounded-2xl p-6 sm:p-10 text-white shadow-xl">
+                <div class="absolute right-0 top-0 transform translate-x-8 -translate-y-8 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-block bg-white/20 text-xs font-semibold px-3 py-1 rounded-full mb-3 backdrop-blur-sm">Năm học 2026 - 2027</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight mb-3">Ôn tập trắc nghiệm & Tự luận KTPL 10</h2>
+                    <p class="text-indigo-100 text-sm sm:text-base mb-6 leading-relaxed">
+                        Hệ thống toàn bộ câu hỏi trắc nghiệm (MCQ & Đúng/Sai) từ Bài 1 đến Bài 5 cùng phần tự luận có lời giải chi tiết giúp bạn đạt điểm tuyệt đối bài thi giữa kì 1.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="startQuickTest()" class="bg-white text-indigo-700 hover:bg-indigo-50 font-semibold px-5 py-2.5 rounded-xl shadow-lg transition flex items-center space-x-2 text-sm">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Làm đề tổng hợp nhanh</span>
+                        </button>
+                        <button onclick="scrollToLessons()" class="bg-indigo-500/40 hover:bg-indigo-500/60 text-white border border-white/30 font-semibold px-5 py-2.5 rounded-xl transition flex items-center space-x-2 text-sm backdrop-blur-sm">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>Chọn bài ôn tập</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Nội dung ôn</p>
+                        <p class="text-xl font-bold text-slate-800 dark:text-white">5 Bài học</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-circle-question"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Trắc nghiệm</p>
+                        <p class="text-xl font-bold text-slate-800 dark:text-white" id="stat-mcq-count">110+ Câu</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Đúng / Sai</p>
+                        <p class="text-xl font-bold text-slate-800 dark:text-white">10 Câu lớn</p>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-700 shadow-sm flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Tự luận</p>
+                        <p class="text-xl font-bold text-slate-800 dark:text-white">3 Câu chuẩn</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mode Selection Grid -->
+            <div id="lesson-section" class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-layer-group text-indigo-600"></i>
+                        <span>Chọn Chế Độ Ôn Tập & Bài Học</span>
+                    </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Bài 1 -->
+                    <div onclick="startLesson(1)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Bài 1</span>
+                                <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition">Các hoạt động kinh tế cơ bản trong đời sống xã hội</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Sản xuất, phân phối, trao đổi, tiêu dùng và các dạng bài tập Đúng/Sai tương tác.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+                            <span>22 câu hỏi</span>
+                            <span class="text-indigo-600 dark:text-indigo-400 font-medium flex items-center space-x-1"><span>Làm bài</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Bài 2 -->
+                    <div onclick="startLesson(2)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Bài 2</span>
+                                <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition">Các chủ thể của nền kinh tế</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Chủ thể sản xuất, chủ thể tiêu dùng, chủ thể trung gian, chủ thể Nhà nước.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+                            <span>22 câu hỏi</span>
+                            <span class="text-indigo-600 dark:text-indigo-400 font-medium flex items-center space-x-1"><span>Làm bài</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Bài 3 -->
+                    <div onclick="startLesson(3)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Bài 3</span>
+                                <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition">Thị trường</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Khái niệm, các chức năng của thị trường, các quan hệ cơ bản trên thị trường.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+                            <span>22 câu hỏi</span>
+                            <span class="text-indigo-600 dark:text-indigo-400 font-medium flex items-center space-x-1"><span>Làm bài</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Bài 4 -->
+                    <div onclick="startLesson(4)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Bài 4</span>
+                                <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition">Cơ chế thị trường</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Bàn tay vô hình, giá cả thị trường, ưu điểm và nhược điểm của cơ chế thị trường.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+                            <span>22 câu hỏi</span>
+                            <span class="text-indigo-600 dark:text-indigo-400 font-medium flex items-center space-x-1"><span>Làm bài</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Bài 5 -->
+                    <div onclick="startLesson(5)" class="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md hover:border-indigo-500 dark:hover:border-indigo-500 transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Bài 5</span>
+                                <i class="fa-solid fa-arrow-right text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 dark:text-white mb-2 group-hover:text-indigo-600 transition">Ngân sách nhà nước</h4>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm mb-4">Khái niệm, đặc điểm, vai trò của ngân sách nhà nước và quyền của công dân.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400">
+                            <span>22 câu hỏi</span>
+                            <span class="text-indigo-600 dark:text-indigo-400 font-medium flex items-center space-x-1"><span>Làm bài</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Tự luận -->
+                    <div onclick="startEssay()" class="bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl p-6 text-white shadow-md hover:shadow-lg transition cursor-pointer group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="bg-white/25 text-xs font-semibold px-3 py-1 rounded-full">Phần 2</span>
+                                <i class="fa-solid fa-arrow-right text-white/80 group-hover:translate-x-1 transition"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">Ôn tập Tự luận & Bài tập tình huống</h4>
+                            <p class="text-indigo-100 text-sm mb-4">Các câu hỏi tự luận trọng tâm kèm hướng dẫn trả lời chi tiết chuẩn đề cương.</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/20 text-xs text-indigo-100">
+                            <span>3 câu tự luận</span>
+                            <span class="font-medium flex items-center space-x-1"><span>Xem đáp án</span> <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: QUIZ PRACTICE -->
+        <div id="view-quiz" class="hidden space-y-6">
+            <!-- Quiz Header -->
+            <div class="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <span id="quiz-badge" class="bg-indigo-50 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold px-3 py-1 rounded-full">Đang ôn tập</span>
+                    <h3 id="quiz-title" class="text-xl font-bold text-slate-800 dark:text-white mt-1">Bài 1: Các hoạt động kinh tế cơ bản</h3>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700 px-3 py-1.5 rounded-xl text-sm font-medium">
+                        <i class="fa-solid fa-clock text-indigo-600 dark:text-indigo-400"></i>
+                        <span id="quiz-timer">00:00</span>
+                    </div>
+                    <button onclick="goHome()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-medium transition flex items-center space-x-2">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Thoát</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                <div id="quiz-progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <!-- Quiz Question Card -->
+            <div id="quiz-container" class="bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+                <!-- Question content injected dynamically -->
+            </div>
+
+            <!-- Quiz Navigation -->
+            <div class="flex items-center justify-between pt-2">
+                <button onclick="prevQuestion()" id="btn-prev" class="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center space-x-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Câu trước</span>
+                </button>
+                <div class="text-sm font-medium text-slate-500 dark:text-slate-400">
+                    Câu <span id="current-q-num">1</span> / <span id="total-q-num">22</span>
+                </div>
+                <button onclick="nextQuestion()" id="btn-next" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md transition flex items-center space-x-2">
+                    <span id="btn-next-text">Câu tiếp</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW: RESULTS -->
+        <div id="view-result" class="hidden max-w-2xl mx-auto space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg text-center space-y-6">
+                <div class="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-extrabold text-slate-800 dark:text-white">Hoàn thành bài ôn tập!</h3>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Dưới đây là kết quả kiểm tra kiến thức của bạn</p>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 py-4 border-y border-slate-100 dark:border-slate-700">
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Số câu đúng</p>
+                        <p id="res-correct" class="text-2xl font-bold text-emerald-600">0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Số câu sai</p>
+                        <p id="res-incorrect" class="text-2xl font-bold text-rose-600">0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Điểm số</p>
+                        <p id="res-score" class="text-2xl font-bold text-indigo-600">0%</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+                    <button onclick="retakeQuiz()" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Làm lại bài này</span>
+                    </button>
+                    <button onclick="goHome()" class="px-6 py-3 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-semibold text-sm transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Về trang chủ</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW: ESSAY -->
+        <div id="view-essay" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="bg-purple-50 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 text-xs font-semibold px-3 py-1 rounded-full">Phần Tự Luận & Tình Huống</span>
+                    <h3 class="text-xl font-bold text-slate-800 dark:text-white mt-1">Đề cương Ôn tập Tự luận Giữa kì 1</h3>
+                </div>
+                <button onclick="goHome()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-medium transition flex items-center space-x-2">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span>Trở về</span>
+                </button>
+            </div>
+
+            <div id="essay-container" class="space-y-6">
+                <!-- Essay items injected dynamically -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 mt-12 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
+        <p>Ứng dụng ôn tập môn Kinh tế & Pháp luật lớp 10 - Giữa Kì 1. Chúc bạn ôn thi đạt kết quả cao!</p>
+    </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl flex items-center space-x-3 text-sm">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-msg">Thông báo</span>
+    </div>
+
+    <!-- Application Logic Script -->
+    <script>
+        // --- QUESTION DATABASE ---
+        const questionData = {
+            1: {
+                title: "Bài 1: Các hoạt động kinh tế cơ bản trong đời sống xã hội",
+                questions: [
+                    { q: "Trong các hoạt động của con người, hoạt động sản xuất đóng vai trò là hoạt động", opts: ["ít quan trọng.", "bình thường nhất.", "thiết yếu nhất.", "cơ bản nhất."], ans: 3 },
+                    { q: "Trong nền kinh tế xã hội, hoạt động đóng vai trò cơ bản nhất, quyết định các hoạt động khác của đời sống xã hội là hoạt động", opts: ["sản xuất", "phân phối.", "tiêu dùng", "trao đổi."], ans: 0 },
+                    { q: "Trong các hoạt động kinh tế, hoạt động nào đóng vai trò trung gian, kết nối người sản xuất với người tiêu dùng?", opts: ["Hoạt động vận chuyển - tiêu dùng", "Hoạt động phân phối - trao đổi", "Hoạt động sản xuất - vận chuyển", "Hoạt động sản xuất - tiêu thụ"], ans: 1 },
+                    { q: "Một nền kinh tế bao gồm các hoạt động cơ bản nào?", opts: ["Sản xuất, phân phối - trao đổi, tiêu dùng", "Sản xuất, kinh doanh, trao đổi, thu nhập", "Sản xuất, kinh doanh, tiêu dùng, thu nhập", "Sản xuất, kinh doanh, trao đổi, cạnh tranh."], ans: 0 },
+                    { q: "Trao đổi là hoạt động đưa sản phẩm đến tay người", opts: ["lao động.", "tiêu dùng.", "phân phối.", "sản xuất."], ans: 1 },
+                    { q: "Phân phối - trao đổi là hoạt động có vai trò", opts: ["giải quyết lợi ích kinh tế của chủ doanh nghiệp.", "là cầu nối sản xuất với tiêu dùng.", "phân bổ nguồn lực cho sản xuất kinh doanh.", "là động lực kích thích người lao động."], ans: 1 },
+                    { q: "Trong mối quan hệ giữa sản xuất và tiêu dùng, thì phân phối và trao đổi đóng vai trò là", opts: ["trung gian.", "nâng đỡ.", "quyết định", "triệt tiêu."], ans: 0 },
+                    { q: "Trong nền kinh tế thị trường, hoạt động sản xuất không gắn liền với việc làm nào dưới đây?", opts: ["Công nhân lắp ráp ô tô xuất xưởng.", "Người nông dân thu hoạch lúa mùa.", "Cửa hàng A tăng cường khuyến mại.", "Thợ may cải tiến mẫu mã sản phẩm"], ans: 2 },
+                    { q: "Trong nền kinh tế thị trường, việc làm nào dưới đây thể hiện tốt vai trò của hoạt động sản xuất", opts: ["Cửa hàng E đầu cơ tích trữ, tự ý nâng giá sản phẩm.", "Doanh nghiệp K quảng cáo sai chất lượng sản phẩm.", "Công ti H tạo ra sản phẩm mới chất lượng cao, giá rẻ.", "Công ti M xả chất thải chưa qua xử lý ra môi trường."], ans: 2 },
+                    { q: "Hoạt động nào dưới đây được coi như là đơn hàng của xã hội đối với sản xuất?", opts: ["sản xuất.", "lao động.", "phân phối.", "tiêu dùng."], ans: 3 },
+                    { q: "Trong nền kinh tế xã hội, hoạt động sản xuất gắn liền với việc làm nào dưới đây?", opts: ["Mang quần áo ra chợ bán.", "May quần áo để bán.", "Trao đổi quần áo với nhau.", "Bán lại quần áo đã nhập."], ans: 1 },
+                    { q: "Quá trình con người sử dụng các yếu tố sản xuất để tạo ra các sản phầm đáp ứng nhu cầu của đời sống xã hội là nội dung của khái niệm hoạt động", opts: ["tiêu dùng", "phân phối.", "sản xuất", "trao đổi."], ans: 2 },
+                    { q: "Quá trình con người sử dụng các sản phẩm hàng hóa và dịch vụ để thỏa mãn nhu cầu sản xuất và sinh hoạt là biểu hiện của hoạt động", opts: ["tiêu dùng.", "lao động.", "sản xuất.", "phân phối."], ans: 0 },
+                    { q: "Phát biểu nào dưới đây là sai về hoạt động tiêu dùng trong nền kinh tế?", opts: ["Tiêu dùng là sử dụng các sản phẩm hàng hóa, dịch vụ để thỏa mãn nhu cầu của con người", "Tiêu dùng là mục đích của sản xuất, là đơn đặt hàng của sản xuất.", "Tiêu dùng bao gồm tiêu dùng cho sản xuất và tiêu dùng cho sinh hoạt.", "Tiêu dùng là hoạt động độc lập không phụ thuộc vào hoạt động sản xuất."], ans: 3 },
+                    { q: "Hoạt động nào dưới đây công ty X thể hiện vai trò là chủ thể sản xuất?", opts: ["Quy định các mức khen thưởng.", "Sản xuất sản phẩm may mặc.", "Thu hẹp quy mô sản xuất.", "Điều chỉnh các nguồn lực."], ans: 1 },
+                    { q: "Việc thu hẹp sản xuất một số sản phẩm có mức tiêu thụ chậm tập trung nguồn lực cho các đơn hàng tốt là biểu hiện của việc thực hiện hoạt động nào dưới đây?", opts: ["Sản xuất.", "Phân phối.", "Trao đổi.", "Tiêu dùng."], ans: 1 },
+                    { q: "Họat động góp phần tạo điều kiện để công nhân có điều kiện tăng thêm thu nhập cũng như bổ sung các quy định về khen thưởng chính là biểu hiện hoạt động kinh tế nào dưới đây?", opts: ["Phân phối.", "Trao đổi.", "Tiêu dùng.", "Sản xuất."], ans: 0 },
+                    { q: "Thông tin Làng gốm Bát Tràng đề cập đến hoạt động kinh tế cơ bản nào dưới đây?", opts: ["Hoạt động sản xuất.", "Hoạt động tiêu dùng.", "Hoạt động phân phối.", "Hoạt động trao đổi."], ans: 0 },
+                    { q: "Việc cung cấp các sản phẩm với các mẫu mã đa dạng và kích thước công năng khác nhau sẽ tác động trực tiếp đến hoạt động nào dưới đây?", opts: ["Sản xuất.", "Tiêu dùng.", "Thu thuế.", "Việc làm."], ans: 1 },
+                    { q: "Để có thể đưa các sản phẩm Gốm có chất lượng cao này đến được với người tiêu dùng, Làng gốm Bát Tràng cần xây dựng yếu tố nào dưới đây?", opts: ["Hệ thống thu tiền tự động.", "Hệ thống phân phối, bán hàng.", "Đầu tư máy móc kỹ thuật.", "Tinh giảm đội ngũ nhân công."], ans: 1 },
+                    // Đúng / Sai statements as specialized format
+                    { 
+                        type: "tf",
+                        stem: "Câu 21: Nhận định về hoạt động sản xuất âm nhạc trên các nền tảng số:",
+                        statements: [
+                            { text: "Hoạt động sản xuất âm nhạc là biểu hiện của hoạt động sản xuất.", ans: true, exp: "Đúng vì đây là quá trình tạo ra sản phẩm âm nhạc phục vụ xã hội." },
+                            { text: "Hoạt động sản xuất âm nhạc tạo ra sản phẩm nhằm phục vụ nhu cầu thưởng thức của công chúng, thể hiện vai trò của sản xuất là gốc, quyết định đến tiêu dùng.", ans: false, exp: "Sai vì tiêu dùng là động lực, là đơn đặt hàng (tiêu dùng quyết định sản xuất)." },
+                            { text: "Hoạt động thưởng thức âm nhạc của công chúng không phản ánh hoạt động tiêu dùng.", ans: false, exp: "Sai vì thưởng thức âm nhạc chính là biểu hiện cụ thể của hoạt động tiêu dùng sản phẩm tinh thần." },
+                            { text: "Quá trình truyền tải các sản phẩm âm nhạc của nhà sản xuất thông qua các nền tảng số và hạ tầng số để đưa sản phẩm đến tay công chúng là biểu hiện của hoạt động phân phối.", ans: true, exp: "Đúng vì đây là khâu phân phối và đưa sản phẩm đến công chúng." }
+                        ]
+                    },
+                    { 
+                        type: "tf",
+                        stem: "Câu 22: Nhận định về mô hình dịch vụ xe công nghệ, giao hàng nhanh:",
+                        statements: [
+                            { text: "Việc các hãng xe không ngừng tuyển dụng tài xế, chuẩn bị phương tiện, trang phục và ứng dụng công nghệ là biểu hiện của hoạt động sản xuất dịch vụ vận tải.", ans: true, exp: "Đúng vì đây là quá trình chuẩn bị và tạo ra dịch vụ." },
+                            { text: "Việc người dân sử dụng các dịch vụ xe ôm công nghệ để di chuyển là hoạt động tiêu dùng.", ans: true, exp: "Đúng vì sử dụng dịch vụ thỏa mãn nhu cầu đi lại là tiêu dùng." },
+                            { text: "Các hãng xe mở app trên phần mềm, tài xế kết nối với khách hàng qua app trên điện thoại là thực hiện hoạt động phân phối trao đổi.", ans: true, exp: "Đúng vì app là công cụ phân phối - trao đổi dịch vụ." },
+                            { text: "Hoạt động tuyển dụng tài xế và kí kết hợp đồng, chuẩn bị phương tiện, trang phục cho tài xế là biểu hiện của hoạt động tiêu dùng.", ans: false, exp: "Sai vì chuẩn bị các yếu tố đầu vào để cung cấp dịch vụ thuộc về sản xuất." }
+                        ]
+                    }
+                ]
+            },
+            2: {
+                title: "Bài 2: Các chủ thể của nền kinh tế",
+                questions: [
+                    { q: "Chủ thể sản xuất là những người", opts: ["phân phối hàng hóa, dịch vụ.", "hỗ trợ sản xuất hàng hóa, dịch vụ.", "trao đổi hàng hóa, dịch vụ.", "sản xuất ra hàng hóa, dịch vụ"], ans: 3 },
+                    { q: "Nội dung nào dưới đây là vai trò của chủ thể tiêu dùng?", opts: ["Tiết kiệm năng lượng.", "Tạo ra sản phầm phù hợp với nhu cầu của xã hội.", "Giúp nền kinh tế linh hoạt hơn.", "Định hướng, tạo động lực cho sản xuất phát triển."], ans: 3 },
+                    { q: "Trong nền kinh tế, chủ thể nào đóng vai trò là cầu nối giữa chủ thể sản xuất và chủ thể tiêu dùng?", opts: ["Chủ thể trung gian.", "Nhà đầu tư chứng khoán.", "Chủ thể doanh nghiệp.", "Chủ thể nhà nước."], ans: 0 },
+                    { q: "Chủ thể trung gian không có vai trò nào dưới đây?", opts: ["Cầu nối giữa sản xuất và tiêu dùng.", "Phân phối hàng hóa đến tay người tiêu dùng.", "Thúc đẩy sản xuất và tiêu dùng hiệu quả", "Tạo ra sản phẩm hàng hóa cho người tiêu dùng."], ans: 3 },
+                    { q: "Trong nền kinh tế, chủ thể trung gian đóng vai trò như thế nào trong mối quan hệ với chủ thể sản xuất và chủ thể tiêu dùng?", opts: ["độc lập.", "cầu nối", "cuối cùng.", "sản xuất."], ans: 1 },
+                    { q: "Trong nền kinh tế nước ta, chủ thể nào đóng vai trò quản lý toàn bộ nền kinh tế quốc dân?", opts: ["Chủ thể trung gian.", "Chủ thể nhà nước", "Chủ thể tiêu dùng.", "Chủ thể sản xuất."], ans: 1 },
+                    { q: "Trong nền kinh tế hàng hóa, chủ thể tiêu dùng thường gắn với việc làm nào dưới đây?", opts: ["Mua gạo về ăn.", "Giới thiệu việc làm.", "Sản xuất hàng hóa.", "Phân phối hàng hóa."], ans: 0 },
+                    { q: "Đối tượng nào dưới đây không đóng vai trò là chủ thể trung gian?", opts: ["Người môi giới việc làm.", "Nhà phân phối.", "Người mua hàng.", "Đại lý bán lẻ."], ans: 2 },
+                    { q: "Trong nền kinh tế, chủ thể nào dưới đây không đóng vai trò là chủ thể sản xuất?", opts: ["Hộ kinh doanh.", "Người kinh doanh.", "Người sản xuất.", "Người tiêu dùng."], ans: 3 },
+                    { q: "Những người sản xuất để cung cấp hàng hóa, dịch vụ ra thị trường đáp ứng nhu cầu tiêu dùng của xã hội được gọi là chủ thể", opts: ["phân phối.", "sản xuất.", "nhà nước.", "tiêu dùng."], ans: 1 },
+                    { q: "Trong nền kinh tế hàng hóa, người tiến hành các hoạt động mua hàng hóa, dịch vụ để thỏa mãn các nhu cầu tiêu dùng cá nhân được gọi là", opts: ["chủ thể tiêu dùng.", "chủ thể trung gian.", "chủ thể nhà nước", "chủ thể sản xuất."], ans: 0 },
+                    { q: "Một trong những vai trò của chủ thể nhà nước là", opts: ["thúc đẩy lạm phát gia tăng.", "tăng tỷ lệ thất nghiệp cơ học.", "giảm tỷ lệ trẻ mù chữ.", "quản lý vĩ mô nền kinh tế."], ans: 3 },
+                    { q: "Trong nền kinh tế hàng hóa, chủ thể nào dưới đây tiến hành các hoạt động mua hàng, tích trữ hàng hóa rồi bán lại cho các đại lý?", opts: ["Chủ thể sản xuất.", "Chủ thể nhà nước", "Chủ thể tiêu dùng.", "Chủ thể trung gian."], ans: 3 },
+                    { q: "Trong nền kinh tế hàng hóa, người tiến hành các hoạt động mua hàng hóa, dịch vụ để thỏa mãn các nhu cầu tiêu dùng cho sản xuất được gọi là", opts: ["chủ thể tiêu dùng.", "chủ thể trung gian.", "chủ thể nhà nước", "chủ thể sản xuất."], ans: 3 },
+                    { q: "Phát biểu nào dưới đây là sai về chủ thể sản xuất.", opts: ["Chủ thể sản xuất là người cung cấp hàng hóa và dịch vụ.", "Chủ thể sản xuất sử dụng các yếu tố sản xuất để kinh doanh thu lợi nhuận.", "Chủ thể sản xuất không bao gồm các nhà đầu tư.", "Chủ thể sản xuất cần có trách nhiệm xã hội khi sản xuất hàng hóa."], ans: 2 },
+                    { q: "Phát biểu nào dưới đây là sai về chủ thể trung gian.", opts: ["Chủ thể trung gian là cầu nối giữa sản xuất với tiêu dùng.", "Chủ thể trung gian đảm nhiệm việc phân phối, trao đổi hàng hóa.", "Chủ thể trung gian là người trực tiếp tạo ra hàng hóa, dịch vụ.", "Siêu thị, chợ, sàn thương mại là hình thức tồn tại của chủ thể trung gian."], ans: 2 },
+                    { q: "Chủ thể tiêu dùng có vai trò như thế nào đối với nền kinh tế?", opts: ["Định hướng, tạo động lực cho sản xuất phát triển.", "Kết nối quan hệ mua - bán trong nền kinh tế.", "Sử dụng các yếu tố sản xuất tạo ra sản phẩm.", "Tạo môi trường pháp lí thuận lợi cho sự phát triển kinh tế."], ans: 0 },
+                    { q: "Vai trò của chủ thể kinh tế nhà nước trong thông tin chăn nuôi dê của anh H là gì?", opts: ["Cho vay vốn để kinh doanh.", "Hỗ trợ về kỹ thuật chăn nuôi.", "Tạo đầu ra cho sản phẩm.", "Hỗ trợ giải quyết việc làm."], ans: 0 },
+                    { q: "Xét về bản chất nền kinh tế, hoạt động của anh H gắn liền với chủ thể nào dưới đây của nền kinh tế?", opts: ["Chủ thể sản xuất.", "Chủ thể trung gian", "Chủ thể nhà nước.", "Chủ thể tiêu dùng"], ans: 0 },
+                    { q: "Để sản phẩm của mình đến được tới người tiêu dùng, anh H đã rất chú trọng khâu nào dưới đây?", opts: ["Nâng giá sản phẩm.", "Tạo nguồn doanh thu.", "Kết nối với các nhà hàng.", "Giải quyết vấn đề việc làm."], ans: 2 },
+                    { 
+                        type: "tf",
+                        stem: "Câu 21: Nhận định về hoạt động của Doanh nghiệp X kinh doanh nông sản hữu cơ (OCOP):",
+                        statements: [
+                            { text: "Doanh nghiệp X vừa là chủ thể sản xuất vừa là chủ thể trung gian trong các hoạt động sản xuất, kinh doanh.", ans: true, exp: "Đúng vì vừa sản xuất vừa trực tiếp phân phối sản phẩm đến điểm bán." },
+                            { text: "Vai trò của chủ thể Nhà nước thể hiện trong việc hỗ trợ bao tiêu hàng hóa cho doanh nghiệp.", ans: false, exp: "Sai vì Nhà nước chỉ hỗ trợ lãi suất chương trình OCOP chứ không trực tiếp bao tiêu hàng hóa." },
+                            { text: "Xây dựng chuỗi cung ứng sản phẩm là một hình thức hoạt động của chủ thể trung gian trong sản xuất kinh doanh.", ans: true, exp: "Đúng vì chuỗi cung ứng là hoạt động trung gian kết nối." },
+                            { text: "Các điểm bán hàng bình ổn trong siêu thị thực hiện chức năng của chủ thể sản xuất trong nền kinh tế.", ans: false, exp: "Sai vì đây là hoạt động phân phối, bán lẻ (trung gian/tiêu dùng), không phải sản xuất trực tiếp." }
+                        ]
+                    },
+                    { 
+                        type: "tf",
+                        stem: "Câu 22: Nhận định về hệ thống siêu thị A làm cầu nối:",
+                        statements: [
+                            { text: "Siêu thị A là chủ thể trung gian trong hoạt động sản xuất kinh doanh.", ans: true, exp: "Đúng vì siêu thị đóng vai trò cầu nối mua đi bán lại." },
+                            { text: "Siêu thị A đã làm tốt hoạt động phân phối sản phẩm.", ans: true, exp: "Đúng vì hệ thống siêu thị phân phối sản phẩm đến tay người dân." },
+                            { text: "Khách hàng mua sắm tại hệ thống siêu thị A đóng vai trò là chủ thể sản xuất trực tiếp tạo ra giá trị hàng hóa cho nền kinh tế.", ans: false, exp: "Sai vì khách hàng mua sắm là chủ thể tiêu dùng." },
+                            { text: "Trong nền kinh tế thị trường, mô hình siêu thị gắn liền với vai trò của chủ thể nhà nước.", ans: false, exp: "Sai vì siêu thị là mô hình của doanh nghiệp tư nhân/kinh tế tư nhân hoặc công ty thương mại, không phải chủ thể Nhà nước." }
+                        ]
+                    }
+                ]
+            },
+            3: {
+                title: "Bài 3: Thị trường",
+                questions: [
+                    { q: "Thị trường không có yếu tố nào dưới đây?", opts: ["Nhạc sĩ.", "Người mua.", "Tiền tệ.", "Hàng hóa."], ans: 0 },
+                    { q: "Hành vi chủ thể kinh tế nào dưới đây không đúng khi tham gia vào thị trường?", opts: ["Doanh nghiệp bán lẻ X tăng giá các mặt hàng khi chi phí vận chuyển tăng cao.", "Giá rau ở chợ M tăng đột biến do rau khan hiếm, nhập về ít.", "Công ti H giảm giá mua thanh long do đối tác ngừng hợp đồng thu mua.", "Trạm xăng dầu B đóng cửa không bán vì giá xăng tăng lên vào ngày mai."], ans: 3 },
+                    { q: "Trong nền kinh tế hàng hóa, một trong những chức năng cơ bản của thị trường là chức năng", opts: ["làm trung gian trao đổi.", "đo lường giá trị hàng hóa.", "thừa nhận giá trị hàng hóa.", "biểu hiện bằng giá cả."], ans: 2 },
+                    { q: "Một trong những quan hệ cơ bản của thị trường là quan hệ", opts: ["Cầu – cạnh tranh.", "Cầu – nhà nước", "Cầu – sản xuất.", "cung – cầu."], ans: 3 },
+                    { q: "Trong nền kinh tế hàng hóa, thị trường không có chức năng cơ bản nào sau đây?", opts: ["Điều tiết sản xuất.", "Cung cấp thông tin.", "Kích thích tiêu dùng.", "Phương tiện cất trữ."], ans: 3 },
+                    { q: "Nội dung nào dưới đây không phải là chức năng của thị trường?", opts: ["Cung cấp hàng hoá, dịch vụ ra thị trường.", "Điều tiết, kích thích hoặc hạn chế sản xuất và tiêu dùng.", "Cung cấp thông tin cho người sản xuất và người tiêu dùng.", "Thừa nhận công dụng xã hội của hàng hoá"], ans: 0 },
+                    { q: "Trong nền kinh tế hàng hóa, một trong những chức năng cơ bản của thị trường là chức năng", opts: ["biểu hiện giá trị hàng hóa.", "làm môi giới trao đổi", "thông tin giá cả hàng hóa.", "trao đổi hàng hóa."], ans: 2 },
+                    { q: "Một trong những quan hệ cơ bản của thị trường là quan hệ", opts: ["Thưởng – phạt.", "Cho – nhận.", "Trên – dưới", "Mua – bán."], ans: 3 },
+                    { q: "Một trong những quan hệ cơ bản của thị trường là quan hệ", opts: ["cung – sản xuất.", "cung – cạnh tranh.", "cung – cầu.", "cung – nhà nước"], ans: 2 },
+                    { q: "Trong nền kinh tế hàng hóa, một trong những chức năng cơ bản của thị trường là chức năng", opts: ["thực hiện.", "kiểm tra hàng hóa.", "đánh giá.", "trao đổi hàng hóa."], ans: 0 },
+                    { q: "Thị trường cung cấp những thông tin, quy mô cung cầu, chất lượng, cơ cấu, chủng loại hàng hóa, điều kiện mua bán là thể hiện chức năng nào dưới đây của thị trường?", opts: ["Thông tin.", "Thừa nhận giá trị và giá trị sử dụng.", "Mã hóa.", "Điều tiết sản xuất."], ans: 0 },
+                    { q: "Thị trường không có yếu tố nào dưới đây?", opts: ["Người mua.", "Luật sư.", "Hàng hóa.", "Người bán."], ans: 1 },
+                    { q: "Thị trường không bao gồm quan hệ nào dưới đây?", opts: ["Cung - cầu.", "Hàng hóa – tiền tệ.", "Mua – bán.", "Ông chủ - nhân viên"], ans: 3 },
+                    { q: "Khi thấy giá bất động sản tăng, anh B đã bán căn nhà mà trước đó anh đã mua nên thu được lợi nhuận cao. Anh B đã vận dụng chức năng nào dưới đây của thị trường?", opts: ["Lưu thông.", "Thanh toán.", "Đại diện.", "Thông tin."], ans: 3 },
+                    { q: "Lĩnh vực trao đổi, mua bán mà ở đó các chủ thể kinh tế tác động qua lại lẫn nhau để xác định giá cả và số lượng hàng hoá, dịch vụ được gọi là", opts: ["thương trường.", "quan hệ đối ngoại.", "yếu tố sản xuất", "thị trường."], ans: 3 },
+                    { q: "Trong nền kinh tế hàng hóa, một trong những chức năng cơ bản của thị trường là chức năng", opts: ["điều tiết tiêu dùng.", "nộp thuế sử dụng đất.", "phương tiện lưu thông.", "trả nợ tiền vật liệu."], ans: 0 },
+                    { q: "Phát biểu nào dưới đây là sai về thị trường?", opts: ["Thị trường là nơi thực hiện hoạt động mua và bán.", "Người mua, người bán là một trong những yếu tố cơ bản của thị trường.", "Chỉ có thể tìm đến thị trường thì con người mới thoả mãn được nhu cầu.", "Mua – bán không phải là quan hệ của thị trường."], ans: 3 },
+                    { q: "Nếu xét theo phạm vi không gian, thị trường vải thiều tiêu thụ chủ yếu ở đâu trong thông tin?", opts: ["Trong nước.", "Thế giới.", "Quốc tế.", "Xuất khẩu."], ans: 0 },
+                    { q: "Hình thức giao dịch vải thiều giữa các chủ thể trong thông tin trên là bằng những hình thức nào dưới đây?", opts: ["Trực tiếp và qua nền tảng số.", "Trực tiếp và vận chuyển tận nơi.", "Qua nền tảng số và xuất khẩu.", "Xuất khẩu trực tiếp ra nước ngoài."], ans: 0 },
+                    { q: "Việc giao dịch quả vải trên sàn thương mại điện tử là biểu hiện của hoạt động kinh tế nào dưới đây?", opts: ["Sản xuất.", "Phân phối – trao đổi.", "Tiêu dùng.", "Tiêu thụ."], ans: 1 },
+                    { 
+                        type: "tf",
+                        stem: "Câu 21: Nhận định về việc Công ty hóa mỹ phẩm A ra mắt dòng sản phẩm dầu gội bồ kết sả chanh:",
+                        statements: [
+                            { text: "Công ty hóa mỹ phẩm A là doanh nghiệp hoạt động với tư cách là chủ thể trung gian.", ans: false, exp: "Sai vì công ty sản xuất mỹ phẩm là chủ thể sản xuất." },
+                            { text: "Công ty đã vận dụng tốt chức năng thông tin của thị trường.", ans: true, exp: "Đúng vì công ty nắm bắt nhu cầu thị trường chưa có để sản xuất." },
+                            { text: "Công ty đã vận dụng tốt chức năng điều tiết sản xuất kinh doanh.", ans: true, exp: "Đúng vì mở rộng quy mô khi sản phẩm được đón nhận." },
+                            { text: "Sản phẩm được người tiêu dùng đón nhận và đánh giá cao là thể hiện chức năng thừa nhận của thị trường.", ans: true, exp: "Đúng vì thị trường đã thừa nhận giá trị và giá trị sử dụng của sản phẩm." }
+                        ]
+                    },
+                    { 
+                        type: "tf",
+                        stem: "Câu 22: Nhận định về việc Công ty Cổ phần Diêm Thống Nhất chuyển đổi sản xuất:",
+                        statements: [
+                            { text: "Công ty chưa vận dụng tốt chức năng thông tin của thị trường.", ans: false, exp: "Sai vì công ty nắm bắt rất rõ thông tin diêm giảm mạnh để chuyển đổi." },
+                            { text: "Việc chuyển từ sản xuất diêm sang một số sản phẩm mới là phù hợp với yêu cầu của thị trường để tồn tại.", ans: true, exp: "Đúng vì đáp ứng xu thế mới." },
+                            { text: "Công ty Diêm Thống Nhất vừa là chủ thể sản xuất vừa là chủ thể trung gian.", ans: false, exp: "Sai vì đây là doanh nghiệp sản xuất trực tiếp." },
+                            { text: "Thị trường tiêu thụ của công ty mới chỉ dừng lại ở thị trường trong nước, công ty muốn tồn tại cần mở rộng ra thị trường thế giới.", ans: true, exp: "Đúng vì xu thế hội nhập toàn cầu cần mở rộng thị trường." }
+                        ]
+                    }
+                ]
+            },
+            4: {
+                title: "Bài 4: Cơ chế thị trường",
+                questions: [
+                    { q: "Số tiền phải trả cho một hàng hoá để bù đắp những chi phí sản xuất và lưu thông hàng hoá đó được gọi là", opts: ["giá trị sử dụng", "tiêu dùng sản phẩm.", "phân phối sản phẩm.", "giá cả hàng hoá."], ans: 3 },
+                    { q: "Xét về mặt bản chất của nền kinh tế, việc điều tiết của cơ chế thị trường được ví như", opts: ["thượng đế", "mệnh lệnh.", "ý niệm tuyệt đối.", "bàn tay vô hình."], ans: 3 },
+                    { q: "Giá bán thực tế của hàng hoá do tác động qua lại giữa các chủ thể kinh tế trên thị trường tại một thời điểm, địa điểm nhất định được gọi là", opts: ["giá cả cá biệt.", "giá cả thị trường.", "giá trị thặng dư.", "giá trị sử dụng."], ans: 1 },
+                    { q: "Hệ thống các quan hệ mang tính điều chỉnh tuân theo yêu cầu của các quy luật kinh tế được gọi là:", opts: ["Thị trường.", "Cơ chế thị trường.", "Giá cả thị trường.", "Kinh tế thị trường."], ans: 1 },
+                    { q: "Một trong những tác động tích cực của cơ chế thị trường là", opts: ["tăng cường đầu cơ tích trữ.", "hủy hoại môi trường sống.", "xuất hiện nhiều hàng giả.", "thúc đẩy tăng trưởng kinh tế."], ans: 3 },
+                    { q: "Trong sản xuất và kinh doanh hàng hóa, mặt tích cực của cơ chế thị trường thể hiện ở việc, các chủ thể kinh tế vì nhằm giành nhiều lợi nhuận về mình đã không ngừng", opts: ["đầu tư đổi mới công nghệ.", "bán hàng giả gây rối thị trường.", "hủy hoại tài nguyên thiên nhiên.", "xả trực tiếp chất thải ra môi trường."], ans: 0 },
+                    { q: "Nhận định nào dưới đây nói về nhược điểm của cơ chế thị trường?", opts: ["Thúc đẩy phát triển kinh tế.", "Kích thích đổi mới công nghệ.", "Làm cho môi trường bị suy thoái.", "Khai thác tối đa mọi nguồn lực."], ans: 2 },
+                    { q: "Trong sản xuất và kinh doanh hàng hóa, mặt tích cực của cơ chế thị trường thể hiện ở việc, các chủ thể kinh tế vì nhằm giành nhiều lợi nhuận về mình đã không ngừng", opts: ["chạy theo lợi nhuận làm hàng giả", "nâng cao năng suất lao động", "triệt tiêu động lực sản xuất kinh doanh.", "lạm dụng chất cấm."], ans: 1 },
+                    { q: "Một trong những tác động tích cực của cơ chế thị trường là", opts: ["tận diệt nguồn tài nguyên.", "phân bổ mọi nguồn thu nhập.", "kích thích sản xuất phát triển.", "chi đều mọi nguồn lợi nhuận."], ans: 2 },
+                    { q: "Cơ chế thị trường điều tiết các quan hệ kinh tế mang tính", opts: ["bắt buộc.", "cưỡng chế.", "tự điều chỉnh.", "tự can thiệp."], ans: 2 },
+                    { q: "Trong nền kinh tế hàng hóa, giá bán thực tế của hàng hoá trên thị trường được gọi là", opts: ["giá trị sử dụng.", "giá trị hàng hóa.", "giá cả thị trường.", "giả cả Nhà nước"], ans: 2 },
+                    { q: "Hệ thống các quan hệ kinh tế mang tính tự điều chỉnh và tuân theo những quy luật kinh tế cơ bản được gọi là", opts: ["cơ chế kinh doanh.", "cơ chế điều tiết.", "cơ chế thị trường.", "cơ chế làm việc."], ans: 2 },
+                    { q: "Nội dung nào sau đây được xem là mặt hạn chế của cơ chế thị trường?", opts: ["Đầu cơ tích trữ gây rối loạn thị trường.", "Thúc đẩy tăng trưởng kinh tế.", "Kích thích sức sản xuất.", "Khai thác tối đa mọi nguồn lực."], ans: 0 },
+                    { q: "Trong nền kinh tế hàng hóa, giá cả thị trường được hình thành thông qua việc thỏa thuận giữa", opts: ["người tiêu dùng với nhau.", "người sản xuất với nhau.", "người mua và người bán.", "người phân phối và trao đổi."], ans: 2 },
+                    { q: "Phát biểu nào sau đây không đúng về cơ chế thị trường?", opts: ["Cơ chế thị trường luôn luôn mang tính chất năng động, tích cực trong kinh tế thị trường.", "Cơ chế thị trường kìm hãm doanh nghiệp cải tiến kĩ thuật, hợp lí hoá sản xuất, đổi mới khoa học công nghệ ứng dụng.", "Cơ chế thị trường kích thích mọi doanh nghiệp phải linh hoạt để cung cấp sản phẩm, hàng hoá, dịch vụ có chất lượng.", "Cơ chế thị trường kích thích tối đa hoạt động của các chủ thể kinh tế hướng đến mục tiêu tối đa hoá lợi nhuận."], ans: 1 },
+                    { q: "Hành vi của chủ thể kinh tế nào sau đây vận dụng tốt cơ chế thị trường?", opts: ["Tiệm thuốc T đẩy giá thuốc lên khi thấy trên thị trường thuốc khan hiếm.", "Công ti H ngưng bán xăng dầu và tích trữ khi nghe tin giá xăng tăng lên.", "Doanh nghiệp mở rộng vùng trồng nguyên liệu khi đơn hàng của các đối tác tăng cao.", "Cửa hàng vật tư y tế B đã bán khẩu trang y tế với giá cao khi nhu cầu mua tăng cao."], ans: 2 },
+                    { q: "Phát biểu nào dưới đây là đúng về ưu điểm của cơ chế thị trường?", opts: ["Cơ chế thị trường làm khoảng cách giàu nghèo thu hẹp.", "Cơ chế thị trường tiềm ẩn nguy cơ khủng hoảng dẫn tới lạm phát là ưu điểm.", "Cơ chế thị trường khiến các chủ thể cạnh tranh không lành mạnh.", "Cơ chế thị trường luôn đòi hỏi các chủ doanh nghiệp phải linh hoạt, sáng tạo để cung cấp sản phẩm, hàng hoá chất lượng."], ans: 3 },
+                    { q: "Sự cạnh tranh giữa các sản phẩm giấy nhập khẩu là biểu hiện của", opts: ["cơ chế thị trường.", "giá cả thị trường.", "độc quyền thương mại.", "bảo hộ mậu dịch."], ans: 0 },
+                    { q: "Quy luật kinh tế nào dưới đây đã tác động đòi hỏi ngành giấy trong nước phải chủ động thay đổi?", opts: ["Cung cầu.", "Cạnh tranh.", "Giá trị.", "Thông tin."], ans: 1 },
+                    { q: "Việc làm nào của ngành giấy thể hiện mặt tích cực của cơ chế thị trường?", opts: ["Ngăn cản nhập khẩu giấy.", "Đổi mới và nâng cao năng suất.", "Kêu gọi sự ủng hộ của người dân.", "Hạ giá thành chấp nhận thua lỗ."], ans: 1 },
+                    { 
+                        type: "tf",
+                        stem: "Câu 21: Nhận định về sự thích ứng của ngành dệt may Việt Nam:",
+                        statements: [
+                            { text: "Cơ chế thị trường đòi hỏi ngành dệt may Việt Nam phải thích ứng để tồn tại.", ans: true, exp: "Đúng vì cạnh tranh quyết liệt buộc phải đổi mới." },
+                            { text: "Ngành dệt may đã nắm bắt được yêu cầu của cơ chế thị trường.", ans: true, exp: "Đúng vì cải tiến kỹ thuật, nâng cao chất lượng." },
+                            { text: "Theo phạm vi lãnh thổ ngành dệt may đã xây dựng được thị trường trong nước và quốc tế.", ans: true, exp: "Đúng vì mở rộng thị trường cả trong và ngoài nước." },
+                            { text: "Ngành dệt may Việt Nam không chịu sự tác động của cơ chế thị trường vì chúng ta có nguồn lao động dồi dào.", ans: false, exp: "Sai vì mọi ngành nghề trong nền kinh tế thị trường đều chịu sự chi phối của cơ chế thị trường." }
+                        ]
+                    },
+                    { 
+                        type: "tf",
+                        stem: "Câu 22: Nhận định về sự biến động nông sản (hồ tiêu, sầu riêng, chuối):",
+                        statements: [
+                            { text: "Giá cả nông sản của Việt Nam chịu tác động rất lớn từ thị trường thế giới.", ans: true, exp: "Đúng vì xuất khẩu nông sản phụ thuộc cung cầu thế giới." },
+                            { text: "Người nông dân liên tục chuyển đổi mô hình sản xuất là phù hợp hoàn toàn với quy luật của giá cả thị trường.", ans: false, exp: "Sai vì việc ồ ạt chuyển đổi cảm tính, chạy theo phong trào gây rủi ro lớn (mặt hạn chế tự phát)." },
+                            { text: "Cơ quan nhà nước cần dự báo và đưa ra khuyến cáo kịp thời tránh người dân ồ ạt chuyển đổi cây trồng.", ans: true, exp: "Đúng vì vai trò quản lý vĩ mô của Nhà nước là rất cần thiết." },
+                            { text: "Việc thay đổi liên tục cơ cấu cây trồng sẽ dẫn đến lãng phí nguồn lực sản xuất.", ans: true, exp: "Đúng vì phá bỏ cây này trồng cây khác tốn kém chi phí và thời gian." }
+                        ]
+                    }
+                ]
+            },
+            5: {
+                title: "Bài 5: Ngân sách nhà nước",
+                questions: [
+                    { q: "Theo quy định của Luật ngân sách thì ngân sách địa phương là các khoản thu và các khoản chi ngân sách nhà nước thuộc nhiệm vụ chi của cấp", opts: ["nhà nước.", "phường xã", "địa phương", "trung ương."], ans: 2 },
+                    { q: "Toàn bộ các khoản thu, chi của Nhà nước được dự toán và thực hiện trong một khoảng thời gian nhất định do cơ quan nhà nước có thẩm quyền quyết định để bảo đảm thực hiện các chức năng, nhiệm vụ của Nhà nước được gọi là", opts: ["tài chính nhà nước.", "kho bạc nhà nước.", "tiền tệ nhà nước.", "Ngân sách Nhà nước."], ans: 3 },
+                    { q: "Một trong những vai trò cơ bản của ngân sách nhà nước là góp phần", opts: ["hoàn trả trực tiếp cho người dân.", "chia đều sản phẩm thặng dư.", "duy trì hoạt động bộ máy nhà nước.", "phân chia mọi nguồn thu nhập."], ans: 2 },
+                    { q: "Một trong những đặc điểm của ngân sách nhà nước là ngân sách nhà nước", opts: ["phân chia cho mọi người.", "ai cũng có quyền lấy.", "có rất nhiều tiền bạc.", "có tính pháp lý cao."], ans: 3 },
+                    { q: "Theo quy định của Luật ngân sách, hoạt động thu, chi của ngân sách nhà nước được thực hiện theo nguyên tắc", opts: ["không hoàn trả trực tiếp.", "thu nhưng không chi.", "chi nhưng không thu.", "hoàn trả trực tiếp."], ans: 0 },
+                    { q: "Theo quy định của Luật ngân sách, ai được quyền quyết định các khoản thu, chi của ngân sách nhà nước?", opts: ["Những người đứng đầu cơ quan Bộ nhà nước.", "Các cơ quan nhà nước có thẩm quyền.", "Các cơ quan thuộc doanh nghiệp nhà nước.", "Các cơ quan lãnh đạo ở địa phương."], ans: 1 },
+                    { q: "Nội dung nào dưới đây không phản ánh vai trò của ngân sách nhà nước?", opts: ["Duy trì mối quan hệ của các doanh nghiệp.", "Tạo một nền tảng chính trị ổn định.", "Góp phần đảm bảo an sinh xã hội.", "Thúc đẩy và tạo điều kiện cho nền kinh tế phát triển."], ans: 0 },
+                    { q: "Nội dung nào không phải là vai trò của ngân sách nhà nước?", opts: ["Phân phối lại thu nhập cho người dân.", "Huy động nguồn vốn cho nền kinh tế.", "Công cụ quan trọng để kiềm chế lạm phát.", "Công cụ điều tiết vĩ mô nền kinh tế"], ans: 1 },
+                    { q: "Theo quy định của Luật ngân sách, mục đích của việc thu, chi ngân sách nhà nước là gì?", opts: ["Để có tiền thực hiện hoạt động ngoại giao.", "Để xây dựng các cơ quan Nhà nước.", "Để tạo nên sự giàu có cho đất nước.", "Để ổn định chính trị-x xã hội, phát triển kinh tế."], ans: 3 },
+                    { q: "Theo quy định của Luật ngân sách thì ngân sách trung ương là các khoản thu và các khoản chi ngân sách nhà nước thuộc nhiệm vụ chi của cấp", opts: ["địa phương", "trung ương.", "nhà nước.", "tỉnh, huyện"], ans: 1 },
+                    { q: "Theo quy định của Luật ngân sách thì ngân sách nhà nước được dự toán và thực hiện trong một khoảng thời gian là bao lâu?", opts: ["Một quý.", "Hai năm.", "Năm năm", "Một năm."], ans: 3 },
+                    { q: "Theo quy định của Luật ngân sách thì ngân sách nhà nước bao gồm ngân sách", opts: ["cấp địa phương.", "cấp trung ương.", "trung ương và địa phương.", "trung ương và quốc gia."], ans: 2 },
+                    { q: "Ngân sách nhà nước là toàn bộ các khọản tiền nào dưới đây của Nhà nước.", opts: ["Thu và chi.", "Chi ngân sách.", "Thuế và ủng hộ.", "Thu ngân sách."], ans: 0 },
+                    { q: "Theo Luật ngân sách nhà nước, nội dung nào dưới đây không phải là đặc điểm của ngân sách nhà nước?", opts: ["Việc tạo lập và sử dụng ngân sách nhà nước phải theo Luật Ngân sách nhà nước.", "Nhà nước là chủ thể duy nhất có quyền quyết định các khoản thu ngân sách", "Ngân sách nhà nước hướng tới mục tiêu giải quyết các quan hệ lợi ích chung", "Nhà nước sẽ hoàn trả cho người dân những khoản mà họ đóng góp vào ngân sách"], ans: 3 },
+                    { q: "Nội dung nào dưới đây không phản ánh quyền của người dân về ngân sách nhà nước?", opts: ["Quyền giám sát hiệu quả sự dụng ngân sách.", "Quyền được nhận tiền trực tiếp từ ngân sách.", "Quyền kiến nghị kiểm toán ngân sách nhà nước.", "Quyền được biết về thông tin ngân sách."], ans: 1 },
+                    { q: "Phát biểu nào sau đây là sai về vai trò của ngân sách nhà nước?", opts: ["Ngân sách nhà nước đảm bảo nền kinh tế phát triển ổn định, bền vững.", "Ngân sách nhà nước cung cấp tài chính duy trì hoạt động của nhà nước.", "Ngân sách nhà nước điều tiết thị trường, bình ổn giá cả hàng hóa.", "Ngân sách nhà nước trả lương cho lao động trong doanh nghiệp tư nhân."], ans: 3 },
+                    { q: "Theo quy đinh của Luật ngân sách, chủ thể duy nhất có quyền sở hữu và quyết định các khoản thu, chi của ngân sách nhà nước là", opts: ["Nhà nước.", "Thủ tướng.", "Tổng bí thư.", "Chủ tịch nước."], ans: 0 },
+                    { q: "Theo dự toán của Quốc hội năm 2021 (Thu: 1,343 triệu tỷ, Chi: 1,687 triệu tỷ), ngân sách nhà nước diễn ra tình trạng", opts: ["bội chi.", "bội thu.", "cân bằng.", "lạm phát."], ans: 0 },
+                    { q: "Theo quy định của Luật ngân sách nhà nước, Nghị quyết về dự toán ngân sách nhà nước mang tính", opts: ["tự nguyện.", "pháp lý.", "tạm thời.", "vĩnh cửu."], ans: 1 },
+                    { q: "Tổng số thu ngân sách nhà nước năm 2021 là 1.343.330 tỷ đồng con số này là ngân sách", opts: ["trung ương.", "địa phương.", "trung ương và địa phương.", "trung ương và dự phòng."], ans: 2 },
+                    { 
+                        type: "tf",
+                        stem: "Câu 21: Nhận định về việc thực hiện chi ngân sách nhà nước:",
+                        statements: [
+                            { text: "Việc chi từ nguồn ngân sách để giảm tỷ lệ đói nghèo là thể hiện đặc điểm của ngân sách nhà nước.", ans: false, exp: "Sai vì đây là vai trò của ngân sách nhà nước (an sinh xã hội), không phải đặc điểm." },
+                            { text: "Thông qua việc chi ngân sách nhằm nâng cao chất lượng cuộc sống người dân đã góp phần điều tiết thu nhập toàn xã hội.", ans: true, exp: "Đúng vì chi ngân sách giúp phân phối lại thu nhập." },
+                            { text: "Chính phủ ban hành quyết sách ngăn chặn suy giảm kinh tế là thể hiện vai trò của chủ thể kinh tế nhà nước.", ans: true, exp: "Đúng vì Chính phủ là đại diện chủ thể Nhà nước." },
+                            { text: "Phát triển kinh tế sẽ góp phần tăng thu ngân sách đồng thời ngân sách nhà nước là công cụ quan trọng để duy trì sự phát triển kinh tế.", ans: true, exp: "Đúng vì mối quan hệ biện chứng giữa kinh tế và ngân sách." }
+                        ]
+                    },
+                    { 
+                        type: "tf",
+                        stem: "Câu 22: Nhận định về báo cáo ngân sách nhà nước cho giáo dục nghề nghiệp:",
+                        statements: [
+                            { text: "Nhà nước chi ngân sách cho giáo dục nghề nghiệp là không hợp lý.", ans: false, exp: "Sai vì giáo dục là quốc sách hàng đầu, chi ngân sách cho giáo dục là hoàn toàn đúng đắn." },
+                            { text: "Ngân sách nhà nước góp phần đẩy nhanh quá trình hội nhập quốc tế.", ans: true, exp: "Đúng vì đào tạo nguồn nhân lực chất lượng phục vụ hội nhập." },
+                            { text: "Việc chi ngân sách cho giáo dục chiếm gần 25% tổng chi ngân sách là vi phạm Luật ngân sách nhà nước.", ans: false, exp: "Sai vì tuân thủ đúng tỷ lệ quy định tại Nghị quyết số 29-NQ/TW." },
+                            { text: "Việc chi phát triển giáo dục từ nguồn ngân sách nhà nước là biểu hiện của nguyên tắc không hoàn trả trực tiếp từ việc thu ngân sách của nhân dân.", ans: true, exp: "Đúng vì ngân sách chi phục vụ lợi ích chung không hoàn trả trực tiếp." }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        const essayData = [
+            {
+                q1: "Câu 1: Em hãy nêu khái niệm về thị trường? Kể tên 3 chức năng của thị trường?",
+                ans: "• Khái niệm thị trường: Là lĩnh vực trao đổi, mua bán mà ở đó các chủ thể kinh tế tác động qua lại lẫn nhau để xác định giá cả và số lượng hàng hoá, dịch vụ.<br>• 3 Chức năng cơ bản của thị trường:<br>  1. Chức năng thông tin: Cung cấp thông tin về quy mô cung cầu, giá cả, chất lượng, chủng loại hàng hóa.<br>  2. Chức năng thừa nhận: Thừa nhận giá trị và giá trị sử dụng của hàng hóa.<br>  3. Chức năng điều tiết, kích thích hoặc hạn chế sản xuất và tiêu dùng."
+            },
+            {
+                q1: "Câu 2: Đọc thông tin về Doanh nghiệp X (thực phẩm hữu cơ), sàn TMĐT Y, hộ gia đình và cơ quan quản lý nhà nước...",
+                ans: "<b>a) Các chủ thể kinh tế và vai trò:</b><br>" +
+                    "+ <i>Doanh nghiệp X:</i> Là chủ thể sản xuất, tổ chức sản xuất và cung cấp thực phẩm hữu cơ cho thị trường.<br>" +
+                    "+ <i>Sàn thương mại điện tử Y:</i> Là chủ thể trung gian, hỗ trợ đưa sản phẩm đến người tiêu dùng toàn quốc.<br>" +
+                    "+ <i>Hộ gia đình:</i> Là chủ thể tiêu dùng, mua và sử dụng sản phẩm.<br>" +
+                    "+ <i>Cơ quan quản lý nhà nước:</i> Là chủ thể Nhà nước, ban hành chính sách ưu đãi thuế, kiểm tra và xử lý vi phạm.<br><br>" +
+                    "<b>b) Sự tương tác giữa các chủ thể:</b> Các chủ thể có sự liên hệ, tác động qua lại và phối hợp với nhau tạo nên dòng lưu chuyển của nền kinh tế thị trường, giúp phân bổ nguồn lực và đưa hàng hóa đến tay người tiêu dùng hiệu quả."
+            },
+            {
+                q1: "Câu 3: Đọc tình huống về UBND thành phố đầu tư sửa chữa trường học, lắp đèn đường từ Ngân sách nhà nước và nghĩa vụ nộp thuế của bố bạn An.",
+                ans: "<b>a) Khái niệm & Khoản thu/chi:</b><br>" +
+                    "+ Ngân sách nhà nước là toàn bộ các khoản thu, chi của Nhà nước được dự toán và thực hiện trong một khoảng thời gian nhất định do cơ quan nhà nước có thẩm quyền quyết định.<br>" +
+                    "+ Việc sửa chữa trường học và làm đường chiếu sáng thuộc <b>khoản chi</b> của Ngân sách nhà nước.<br><br>" +
+                    "<b>b) Đặc điểm:</b> Thể hiện đặc điểm Ngân sách nhà nước được sử dụng để phục vụ lợi ích chung của xã hội, đáp ứng nhu cầu thiết yếu như giáo dục, giao thông và an toàn cộng đồng.<br><br>" +
+                    "<b>c) Trách nhiệm của học sinh (An và các bạn):</b> Chấp hành pháp luật, sử dụng tiết kiệm và bảo vệ các công trình công cộng được đầu tư từ ngân sách; đồng thời có quyền được hưởng các dịch vụ công cộng do Nhà nước cung cấp."
+            }
+        ];
+
+        // --- APP STATE ---
+        let currentLessonId = null;
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let userAnswers = {}; // stores answers for MCQ or T/F
+        let timerInterval = null;
+        let secondsElapsed = 0;
+
+        // --- DARK MODE LOGIC ---
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                icon.className = 'fa-solid fa-moon';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+            }
+        }
+
+        // Init theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+        }
+
+        // --- NAVIGATION & VIEWS ---
+        function showView(viewName) {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-quiz').classList.add('hidden');
+            document.getElementById('view-result').classList.add('hidden');
+            document.getElementById('view-essay').classList.add('hidden');
+
+            document.getElementById(`view-${viewName}`).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+            clearInterval(timerInterval);
+            showView('home');
+        }
+
+        function scrollToLessons() {
+            document.getElementById('lesson-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showToast(msg, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.innerText = msg;
+            toastIcon.className = isSuccess ? "fa-solid fa-circle-check text-emerald-400" : "fa-solid fa-triangle-exclamation text-amber-400";
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- QUIZ LOGIC ---
+        function startLesson(lessonId) {
+            currentLessonId = lessonId;
+            const lesson = questionData[lessonId];
+            currentQuestions = JSON.parse(JSON.stringify(lesson.questions)); // clone
+            currentIndex = 0;
+            userAnswers = {};
+
+            document.getElementById('quiz-title').innerText = lesson.title;
+            document.getElementById('quiz-badge').innerText = `Bài ${lessonId}`;
+            document.getElementById('total-q-num').innerText = currentQuestions.length;
+
+            startTimer();
+            showView('quiz');
+            renderQuestion();
+        }
+
+        function startQuickTest() {
+            // Combine all questions into a comprehensive quiz
+            let allQ = [];
+            for (let key in questionData) {
+                allQ = allQ.concat(questionData[key].questions);
+            }
+            // Shuffle
+            allQ.sort(() => Math.random() - 0.5);
+            
+            currentLessonId = 'all';
+            currentQuestions = allQ;
+            currentIndex = 0;
+            userAnswers = {};
+
+            document.getElementById('quiz-title').innerText = "Đề Trắc Nghiệm Tổng Hợp Giữa Kì 1";
+            document.getElementById('quiz-badge').innerText = "Tổng hợp toàn bộ";
+            document.getElementById('total-q-num').innerText = currentQuestions.length;
+
+            startTimer();
+            showView('quiz');
+            renderQuestion();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            secondsElapsed = 0;
+            document.getElementById('quiz-timer').innerText = "00:00";
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                let m = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+                let s = (secondsElapsed % 60).toString().padStart(2, '0');
+                document.getElementById('quiz-timer').innerText = `${m}:${s}`;
+            }, 1000);
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('quiz-container');
+            const q = currentQuestions[currentIndex];
+            
+            document.getElementById('current-q-num').innerText = currentIndex + 1;
+            
+            // Progress bar
+            let progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${progress}%`;
+
+            // Next button text
+            if (currentIndex === currentQuestions.length - 1) {
+                document.getElementById('btn-next-text').innerText = "Nộp bài";
+            } else {
+                document.getElementById('btn-next-text').innerText = "Câu tiếp";
+            }
+
+            document.getElementById('btn-prev').disabled = (currentIndex === 0);
+
+            let html = '';
+
+            if (q.type === 'tf') {
+                // True / False question type with multiple statements a, b, c, d
+                html = `<div class="space-y-4">
+                    <h4 class="text-base sm:text-lg font-bold text-slate-800 dark:text-white leading-relaxed">${q.stem}</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 italic">Hãy chọn Đúng hoặc Sai cho từng ý dưới đây, sau đó xem giải thích.</p>
+                    <div class="space-y-4 pt-2">`;
+
+                q.statements.forEach((stmt, idx) => {
+                    let userVal = (userAnswers[currentIndex] && userAnswers[currentIndex][idx] !== undefined) ? userAnswers[currentIndex][idx] : null;
+                    let isChecked = userVal !== null;
+                    
+                    html += `<div class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                        <p class="text-sm font-medium text-slate-800 dark:text-slate-200"><span class="font-bold mr-2 text-indigo-600">${String.fromCharCode(97 + idx)})</span> ${stmt.text}</p>
+                        <div class="flex items-center space-x-3">
+                            <button onclick="answerTF(${currentIndex}, ${idx}, true)" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition ${userVal === true ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}">Đúng</button>
+                            <button onclick="answerTF(${currentIndex}, ${idx}, false)" class="px-4 py-1.5 rounded-lg text-xs font-semibold border transition ${userVal === false ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'}">Sai</button>
+                        </div>`;
+                    
+                    if (isChecked) {
+                        let isCorrect = (userVal === stmt.ans);
+                        html += `<div class="mt-2 text-xs p-2.5 rounded-lg ${isCorrect ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800'}">
+                            <span class="font-bold">${isCorrect ? '✓ Chính xác!' : '✕ Chưa chính xác!'}</span> Đáp án chuẩn: <span class="font-bold">${stmt.ans ? 'Đúng' : 'Sai'}</span>. ${stmt.exp}
+                        </div>`;
+                    }
+
+                    html += `</div>`;
+                });
+
+                html += `</div></div>`;
+
+            } else {
+                // Standard MCQ 4 options
+                let selectedOpt = userAnswers[currentIndex] !== undefined ? userAnswers[currentIndex] : null;
+                html = `<div class="space-y-4">
+                    <h4 class="text-base sm:text-lg font-bold text-slate-800 dark:text-white leading-relaxed"><span class="text-indigo-600 mr-2">Câu ${currentIndex + 1}:</span> ${q.q}</h4>
+                    <div class="space-y-3 pt-2">`;
+
+                q.opts.forEach((opt, idx) => {
+                    let letter = String.fromCharCode(65 + idx);
+                    let isSelected = selectedOpt === idx;
+                    let btnClass = "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-indigo-500 hover:bg-indigo-50/40 dark:hover:bg-slate-700";
+                    
+                    if (isSelected) {
+                        btnClass = "border-indigo-600 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-300 shadow-sm font-semibold";
+                    }
+
+                    html += `<button onclick="answerMCQ(${currentIndex}, ${idx})" class="w-full text-left p-4 rounded-xl border ${btnClass} transition flex items-center space-x-3 text-sm">
+                        <span class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center font-bold text-xs text-slate-600 dark:text-slate-300 shrink-0">${letter}</span>
+                        <span>${opt}</span>
+                    </button>`;
+                });
+
+                html += `</div></div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function answerMCQ(qIdx, optIdx) {
+            userAnswers[qIdx] = optIdx;
+            renderQuestion();
+        }
+
+        function answerTF(qIdx, stmtIdx, val) {
+            if (!userAnswers[qIdx]) {
+                userAnswers[qIdx] = {};
+            }
+            userAnswers[qIdx][stmtIdx] = val;
+            renderQuestion();
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIndex < currentQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            let correctCount = 0;
+            let totalScored = 0;
+
+            currentQuestions.forEach((q, idx) => {
+                if (q.type === 'tf') {
+                    q.statements.forEach((stmt, sIdx) => {
+                        totalScored++;
+                        if (userAnswers[idx] && userAnswers[idx][sIdx] === stmt.ans) {
+                            correctCount++;
+                        }
+                    });
+                } else {
+                    totalScored++;
+                    if (userAnswers[idx] !== undefined && userAnswers[idx] === q.ans) {
+                        correctCount++;
+                    }
+                }
+            });
+
+            let incorrectCount = totalScored - correctCount;
+            let percent = Math.round((correctCount / totalScored) * 100);
+
+            document.getElementById('res-correct').innerText = correctCount;
+            document.getElementById('res-incorrect').innerText = incorrectCount;
+            document.getElementById('res-score').innerText = `${percent}%`;
+
+            showView('result');
+            showToast("Đã hoàn thành bài ôn tập!");
+        }
+
+        function retakeQuiz() {
+            if (currentLessonId === 'all') {
+                startQuickTest();
+            } else {
+                startLesson(currentLessonId);
+            }
+        }
+
+        // --- ESSAY LOGIC ---
+        function startEssay() {
+            const container = document.getElementById('essay-container');
+            let html = '';
+
+            essayData.forEach((item, idx) => {
+                html += `<div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+                    <h4 class="font-bold text-base sm:text-lg text-slate-800 dark:text-white leading-relaxed">${item.q1}</h4>
+                    <div id="essay-ans-${idx}" class="hidden p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                        <p class="font-semibold text-indigo-600 dark:text-indigo-400">Đáp án / Gợi ý chuẩn:</p>
+                        <p>${item.ans}</p>
+                    </div>
+                    <button onclick="toggleEssayAnswer(${idx})" id="btn-essay-${idx}" class="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 rounded-xl text-sm font-semibold transition flex items-center space-x-2">
+                        <i class="fa-solid fa-eye"></i>
+                        <span>Xem đáp án & gợi ý</span>
+                    </button>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+            showView('essay');
+        }
+
+        function toggleEssayAnswer(idx) {
+            const ansBox = document.getElementById(`essay-ans-${idx}`);
+            const btn = document.getElementById(`btn-essay-${idx}`);
+            
+            if (ansBox.classList.contains('hidden')) {
+                ansBox.classList.remove('hidden');
+                btn.innerHTML = `<i class="fa-solid fa-eye-slash"></i> <span>Ẩn đáp án</span>`;
+            } else {
+                ansBox.classList.add('hidden');
+                btn.innerHTML = `<i class="fa-solid fa-eye"></i> <span>Xem đáp án & gợi ý</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
